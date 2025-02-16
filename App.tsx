@@ -6,6 +6,7 @@ import { Todo } from './src/components/types';
 
 const TodoApp = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
+
   const addTodo = (text: string) =>{
     setTodoList([...todoList, {
       id: Date.now().toString(),
@@ -18,6 +19,16 @@ const TodoApp = () => {
     console.log(id);
     setTodoList(todoList.filter(item => item.id !== id));
   };
+
+const editTodo = (id: string, newText: string) => {
+  setTodoList(todoList.map(item => item.id === id ?
+    {
+      ...item,
+      text: newText,
+    }
+    : item,
+  ));
+};
 
   const toggleTodo = (id:string) =>{
     setTodoList(todoList.map(item => item.id === id ? {
@@ -32,7 +43,7 @@ const TodoApp = () => {
     <SafeAreaView style ={styles.container}>
       <Text style ={styles.headerText}>TodoApp</Text>
       <TodoInput onAddTodo={addTodo}/>
-      <TodoList onToggleTodo= {toggleTodo} onDeleteTodo={deleteTodo} todoList={todoList}/>
+      <TodoList onEditTodo={editTodo} onToggleTodo= {toggleTodo} onDeleteTodo={deleteTodo} todoList={todoList}/>
     </SafeAreaView>
   );
 };

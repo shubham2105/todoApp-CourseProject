@@ -1,21 +1,36 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Todo } from './types';
+import TodoEdit from './TodoEdit';
 interface TodoItemProps{
     todo: Todo
     onDelete: () => void;
     onToggle: () => void;
+    onEdit: (newText: string) => void;
 }
-const TodoItem: React.FC<TodoItemProps> = ({todo, onDelete, onToggle}) =>{
-    console.log(todo, 'todo from todoItem component');
+const TodoItem: React.FC<TodoItemProps> = ({todo, onDelete, onToggle, onEdit}) =>{
+    const [isEditing, setIsEditing] = React.useState(false);
+
+    const handleEdit = (newText: string)=>{
+        console.log(newText, 'From handleEdit');
+        onEdit(newText);
+        setIsEditing(false);
+    };
+    if (isEditing){
+        return <TodoEdit
+            todo={todo}
+            onSave={handleEdit}
+            onCancel={()=>setIsEditing(false)}
+            />;
+    }
     return (
         <View style = {styles.container}>
             <TouchableOpacity onPress={onToggle}>
                 <Text style={[styles.todoText, todo?.completed && styles.completedText]}>{todo.text}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.editButton, {backgroundColor:'green'}]}>
-                    <Text style={styles.editButtonsText}>Add</Text>
+                <TouchableOpacity onPress={()=>setIsEditing(true)} style={[styles.editButton, {backgroundColor:'green'}]}>
+                    <Text style={styles.editButtonsText}>Edit</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onDelete} style={[styles.deleteButton, {backgroundColor:'red'}]}>
                     <Text style={styles.editButtonsText}>Delete</Text>
