@@ -29,10 +29,10 @@ const TodoItem: React.FC<TodoItemProps> = ({todo, onDelete, onToggle, onEdit}) =
                 <Text style={[styles.todoText, todo?.completed && styles.completedText]}>{todo.text}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={()=>setIsEditing(true)} style={[styles.editButton, {backgroundColor:'green'}]}>
+                <TouchableOpacity disabled={todo?.completed} onPress={()=>setIsEditing(true)} style={[styles.editButton, {backgroundColor: todo?.completed ? 'gray' : 'green', opacity: todo?.completed ? 0.5 : 1}]}>
                     <Text style={styles.editButtonsText}>Edit</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onDelete} style={[styles.deleteButton, {backgroundColor:'red'}]}>
+                <TouchableOpacity disabled={todo?.completed} onPress={onDelete} style={[styles.deleteButton, {backgroundColor: todo?.completed ?'gray':'red', opacity: todo?.completed ? 0.5 : 1}]}>
                     <Text style={styles.editButtonsText}>Delete</Text>
                 </TouchableOpacity>
             </View>

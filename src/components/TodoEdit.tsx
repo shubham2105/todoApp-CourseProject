@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { Todo } from './types';
 
