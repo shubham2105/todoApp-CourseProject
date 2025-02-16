@@ -1,22 +1,23 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Todo } from './types';
-
 interface TodoItemProps{
     todo: Todo
+    onDelete: () => void;
+    onToggle: () => void;
 }
-const TodoItem: React.FC<TodoItemProps> = ({todo}) =>{
+const TodoItem: React.FC<TodoItemProps> = ({todo, onDelete, onToggle}) =>{
     console.log(todo, 'todo from todoItem component');
     return (
         <View style = {styles.container}>
-            <TouchableOpacity>
-                <Text style={styles.todoText}>{todo.text}</Text>
+            <TouchableOpacity onPress={onToggle}>
+                <Text style={[styles.todoText, todo?.completed && styles.completedText]}>{todo.text}</Text>
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={[styles.editButton, {backgroundColor:'green'}]}>
                     <Text style={styles.editButtonsText}>Add</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.deleteButton, {backgroundColor:'red'}]}>
+                <TouchableOpacity onPress={onDelete} style={[styles.deleteButton, {backgroundColor:'red'}]}>
                     <Text style={styles.editButtonsText}>Delete</Text>
                 </TouchableOpacity>
             </View>
@@ -62,5 +63,9 @@ const styles = StyleSheet.create({
         fontSize:14,
         fontWeight:'bold',
         color:'white',
+    },
+    completedText:{
+        textDecorationLine:'line-through',
+        color:'gray',
     },
 });

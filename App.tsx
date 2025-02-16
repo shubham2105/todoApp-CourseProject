@@ -14,13 +14,25 @@ const TodoApp = () => {
     }]);
   };
 
-  console.log(todoList);
+  const deleteTodo = (id: string) => {
+    console.log(id);
+    setTodoList(todoList.filter(item => item.id !== id));
+  };
+
+  const toggleTodo = (id:string) =>{
+    setTodoList(todoList.map(item => item.id === id ? {
+      ...item,
+      completed: !item.completed,
+    }
+    : item,
+  ),);
+  };
 
   return (
     <SafeAreaView style ={styles.container}>
       <Text style ={styles.headerText}>TodoApp</Text>
       <TodoInput onAddTodo={addTodo}/>
-      <TodoList todoList={todoList}/>
+      <TodoList onToggleTodo= {toggleTodo} onDeleteTodo={deleteTodo} todoList={todoList}/>
     </SafeAreaView>
   );
 };
